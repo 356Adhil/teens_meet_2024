@@ -50,9 +50,9 @@ exports.createDelegate = async (req, res) => {
     // If validation passes, save the data to the database
     const delegate = await Delegates.create(req.body);
 
-    // if (delegate) {
-    //   await sendWhatsAppMessaging(delegate);
-    // }
+    if (delegate) {
+      await sendWhatsAppMessaging(delegate);
+    }
 
     // Send success response
     return res
