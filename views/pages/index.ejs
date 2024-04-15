@@ -6,44 +6,43 @@
     background-color: rgb(5, 22, 43);
   }
 
-  /* Basic hidden state with smooth transition */
+  /* Overlay for the message box */
+  #messageOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4); /* Slightly darker backdrop for more focus */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Ensure it's well above other content */
+  }
+
   .hidden {
-    display: none;
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out;
+    display: none !important; /* Ensures override */
   }
 
   /* General styling for messageBox */
   #messageBox {
+    min-width: 300px; /* Minimum width */
+    padding: 20px;
+    background: #ffffff; /* Crisp white background */
+    border-radius: 10px; /* Modern rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for 3D effect */
     text-align: center;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    font-size: 1rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* subtle shadow */
-    transition: all 0.3s ease-in-out;
-    width: 100%; /* Responsive full width */
-    box-sizing: border-box; /* Includes padding and border in the element's total width and height */
+    font-size: 16px; /* Adequate font size for readability */
+    color: #333; /* Dark grey text for contrast */
+    transition: all 0.3s ease; /* Smooth transition for opacity */
   }
 
-  /* Success message styling */
+  /* Success and error message styling */
   .text-success {
-    color: #28623c; /* sophisticated green */
-    background-color: #ebf6ef; /* very light green */
-    border: 1px solid #b8e4c9; /* soft green border */
+    border: 1px solid #4CAF50; /* Green border */
+    color: #4CAF50; /* Green text */
   }
 
-  /* Error message styling */
   .text-error {
-    color: #862d2d; /* soft red */
-    background-color: #fdedee; /* very light red */
-    border: 1px solid #fbc2c4; /* soft red border */
-  }
-
-  /* Visible state for showing messageBox */
-  .visible {
-    display: block;
-    opacity: 1;
+    border: 1px solid #f44336; /* Red border */
+    color: #f44336; /* Red text */
   }
 </style>
 
@@ -56,10 +55,10 @@
       <h2 class="text-xl sm:text-2xl font-bold mb-6 text-gray-800 text-center">
         Registration for Teens Meet <br><span class="text-red-500"> ( TEST )</span>
       </h2>
-      <div
-        id="messageBox"
-        class="hidden text-center p-4 mb-4 text-sm font-medium"
-      ></div>
+
+      <div id="messageOverlay" class="hidden">
+        <div id="messageBox" class="text-center p-4 mb-4 text-sm font-medium rounded"></div>
+      </div>
 
       <form
         action="/delegates"
@@ -249,21 +248,14 @@
   });
 
   function showMessage(message, type) {
+    const messageOverlay = document.getElementById("messageOverlay");
     const messageBox = document.getElementById("messageBox");
     messageBox.textContent = message;
-    messageBox.classList.remove("text-success", "text-error", "hidden"); // Clear previous states
-    messageBox.classList.add(
-      type === "error" ? "text-error" : "text-success",
-      "visible"
-    ); // Apply new styling and make visible
+    messageBox.className = `text-center p-4 mb-4 text-sm font-medium rounded ${type === "error" ? "text-error" : "text-success"}`;
+    messageOverlay.classList.remove("hidden");
 
-    // Automatically hide the message after 3000 milliseconds (3 seconds)
     setTimeout(() => {
-      messageBox.style.opacity = "0"; // Start fading out
-      setTimeout(() => {
-        messageBox.classList.remove("visible");
-        messageBox.classList.add("hidden");
-      }, 300); // Delay hiding until after fade completes
+      messageOverlay.classList.add("hidden");
     }, 3000);
   }
 </script>
