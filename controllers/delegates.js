@@ -37,8 +37,6 @@ exports.getDelegate = async (req, res) => {
 // @access  Public
 exports.createDelegate = async (req, res) => {
   try {
-    const hell = req.body;
-    console.log({ hell });
     const existingMobile = await Delegates.findOne({ mobile: req.body.mobile });
     if (existingMobile) {
       return res.status(400).json({ error: "Mobile number already exists" });
@@ -77,8 +75,9 @@ async function sendWhatsAppMessaging(user) {
     console.log({ phoneNumber });
 
     const WhatsappMessage = `
-Hi ${user.full_name},
 🌟 Thank you for Registering Teens Meet 2024! 🌟
+
+Hi ${user.full_name},
 
 Thank you for helping us test our registration for Teens Meet 2024. Your feedback is crucial to improving our platform.
 
