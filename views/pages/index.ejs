@@ -1,0 +1,269 @@
+<style>
+  .background-image {
+    background-image: url("https://www.creative-tim.com/learning-lab/tailwind-starter-kit/img/register_bg_2.png");
+    background-size: cover;
+    background-position: center;
+    background-color: rgb(5, 22, 43);
+  }
+
+  /* Basic hidden state with smooth transition */
+  .hidden {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+  }
+
+  /* General styling for messageBox */
+  #messageBox {
+    text-align: center;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* subtle shadow */
+    transition: all 0.3s ease-in-out;
+    width: 100%; /* Responsive full width */
+    box-sizing: border-box; /* Includes padding and border in the element's total width and height */
+  }
+
+  /* Success message styling */
+  .text-success {
+    color: #28623c; /* sophisticated green */
+    background-color: #ebf6ef; /* very light green */
+    border: 1px solid #b8e4c9; /* soft green border */
+  }
+
+  /* Error message styling */
+  .text-error {
+    color: #862d2d; /* soft red */
+    background-color: #fdedee; /* very light red */
+    border: 1px solid #fbc2c4; /* soft red border */
+  }
+
+  /* Visible state for showing messageBox */
+  .visible {
+    display: block;
+    opacity: 1;
+  }
+</style>
+
+<section class="px-5 pt-10 background-image">
+  <div
+    class="items-start mt-10 justify-center flex"
+    style="min-height: calc(100vh - 4rem)"
+  >
+    <div class="bg-white p-6 sm:p-8 rounded-lg shadow-lg w-full max-w-md">
+      <h2 class="text-xl sm:text-2xl font-bold mb-6 text-gray-800 text-center">
+        Registration for Teens Meet <br><span class="text-red-500"> ( TEST )</span>
+      </h2>
+      <div
+        id="messageBox"
+        class="hidden text-center p-4 mb-4 text-sm font-medium"
+      ></div>
+
+      <form
+        action="/delegates"
+        method="POST"
+        enctype="multipart/form-data"
+        class="max-w-md mx-auto"
+      >
+        <div class="grid md:grid-cols-2 md:gap-6">
+          <!-- Full Name -->
+          <div class="relative z-0 w-full mb-5 group">
+            <input
+              type="text"
+              name="full_name"
+              id="floating_full_name"
+              class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              placeholder=" "
+              required
+            />
+            <label
+              for="floating_full_name"
+              class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+              >Full Name</label
+            >
+          </div>
+
+          <!-- Mobile -->
+          <div class="relative z-0 w-full mb-5 group">
+            <input
+              type="tel"
+              name="mobile"
+              id="floating_mobile"
+              class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              placeholder=" "
+              required
+            />
+            <label
+              for="floating_mobile"
+              class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+              >Mobile</label
+            >
+          </div>
+        </div>
+
+        <div class="grid md:grid-cols-2 md:gap-6">
+          <!-- Parent's Name -->
+          <div class="relative z-0 w-full mb-5 group">
+            <input
+              type="text"
+              name="parent_name"
+              id="floating_parent_name"
+              class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              placeholder=" "
+              required
+            />
+            <label
+              for="floating_parent_name"
+              class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+              >Parent's Name</label
+            >
+          </div>
+
+          <!-- Parent's Mobile -->
+          <div class="relative z-0 w-full mb-5 group">
+            <input
+              type="tel"
+              name="parent_mobile"
+              id="floating_parent_mobile"
+              class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              placeholder=" "
+              required
+            />
+            <label
+              for="floating_parent_mobile"
+              class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+              >Parent's Mobile</label
+            >
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="relative z-0 w-full mb-5 group">
+          <input
+            type="tel"
+            name="email"
+            id="floating_email"
+            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+            placeholder=" "
+            required
+          />
+          <label
+            for="floating_email"
+            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            >Email</label
+          >
+        </div>
+        <!-- Class & Age -->
+
+        <div class="grid md:grid-cols-2 md:gap-6">
+          <div class="relative z-0 w-full mb-5 group">
+            <input
+              type="text"
+              name="class"
+              id="floating_class"
+              class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              placeholder=" "
+              required
+            />
+            <label
+              for="floating_class"
+              class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+              >Class</label
+            >
+          </div>
+          <div class="relative z-0 w-full mb-5 group">
+            <input
+              type="text"
+              name="age"
+              id="floating_age"
+              class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              placeholder=" "
+              required
+            />
+            <label
+              for="floating_age"
+              class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+              >Age</label
+            >
+          </div>
+        </div>
+
+        <!-- PLACE -->
+        <div class="relative z-0 w-full mb-5 group">
+          <input
+            type="text"
+            name="place"
+            id="floating_place"
+            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+            placeholder=" "
+            required
+          />
+          <label
+            for="floating_place"
+            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            >Place</label
+          >
+        </div>
+
+        <button
+          type="submit"
+          class="text-white bg-blue-800 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        >
+          Submit
+        </button>
+      </form>
+      <div class="text-black pt-5">
+        <p class="text-sm font-light">
+          Powered by
+          <a href="https://adhilakbar.in"
+            ><span class="font-bold">Innovation Edge</span></a
+          >
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelector("form").addEventListener("submit", function (event) {
+    event.preventDefault();
+    const formData = new FormData(this);
+
+    fetch("/delegates", {
+      method: "POST",
+      body: formData, // No headers are set; the browser handles it
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.error) {
+          showMessage(data.error, "error");
+        } else {
+          showMessage(data.message, "success");
+        }
+      })
+      .catch((error) => {
+        showMessage("Failed to submit form: " + error.message, "error");
+      });
+  });
+
+  function showMessage(message, type) {
+    const messageBox = document.getElementById("messageBox");
+    messageBox.textContent = message;
+    messageBox.classList.remove("text-success", "text-error", "hidden"); // Clear previous states
+    messageBox.classList.add(
+      type === "error" ? "text-error" : "text-success",
+      "visible"
+    ); // Apply new styling and make visible
+
+    // Automatically hide the message after 3000 milliseconds (3 seconds)
+    setTimeout(() => {
+      messageBox.style.opacity = "0"; // Start fading out
+      setTimeout(() => {
+        messageBox.classList.remove("visible");
+        messageBox.classList.add("hidden");
+      }, 300); // Delay hiding until after fade completes
+    }, 3000);
+  }
+</script>
