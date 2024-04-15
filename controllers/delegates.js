@@ -66,13 +66,19 @@ exports.createDelegate = async (req, res) => {
 async function sendWhatsAppMessaging(user) {
   try {
     let phoneNumber = String(user.parent_mobile);
+    let delegateNumaber = String(user.mobile);
     const regex = /[ +]/g;
     phoneNumber = phoneNumber.replace(regex, "");
+    delegateNumaber = delegateNumaber.replace(regex, "");
 
     if (!phoneNumber.startsWith("91")) {
       phoneNumber = "91" + phoneNumber;
     }
+    if (!delegateNumaber.startsWith("91")) {
+      delegateNumaber = "91" + delegateNumaber;
+    }
     console.log({ phoneNumber });
+    console.log({ delegateNumaber });
 
     const WhatsappMessage = `
 🌟 Thank you for Registering Teens Meet 2024! 🌟
@@ -92,6 +98,28 @@ Innovation Edge`.replace(/\n\s*\n\s*/g, "\n\n");
     data.append("secret", process.env.WHTSP_ACCESS_TOKEN);
 
     let config = {
+      method: "post",
+      url: process.env.WHATSAPP_API_URL,
+      data: data,
+    };
+
+    await axios
+      .request(config)
+      .then((response) => {
+        console.log(JSON.stringify(response.data));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    const delegate = new FormData();
+    delegate.append("type", "text");
+    delegate.append("message", WhatsappMessage);
+    delegate.append("recipient", delegateNumaber);
+    delegate.append("account", process.env.WHATSAPP_ACCOUNT);
+    delegate.append("secret", process.env.WHTSP_ACCESS_TOKEN);
+
+    config = {
       method: "post",
       url: process.env.WHATSAPP_API_URL,
       data: data,
