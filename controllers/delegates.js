@@ -39,7 +39,7 @@ exports.createDelegate = async (req, res) => {
   try {
     const existingMobile = await Delegates.findOne({ mobile: req.body.mobile });
     if (existingMobile) {
-      return res.status(400).json({ error: "Mobile number already exists" });
+      return res.status(400).json({ error: "You Are Already Registered For Teen's Meet 2024 !" });
     }
 
     const existingEmail = await Delegates.findOne({ email: req.body.email });
@@ -57,7 +57,7 @@ exports.createDelegate = async (req, res) => {
     // Send success response
     return res
       .status(201)
-      .json({ message: "Delegate created successfully", delegate });
+      .json({ message: "Registration Completed", delegate });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
