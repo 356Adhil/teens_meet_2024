@@ -1,10 +1,27 @@
 const express = require("express");
+const session = require("express-session");
 const app = express();
 const expressLayouts = require("express-ejs-layouts");
 const { SitemapStream, streamToPromise } = require("sitemap");
 const { createGzip } = require("zlib");
 const connectDB = require("./config/db");
 require("dotenv").config();
+
+
+// Configure express-session middleware
+app.use(session({
+  secret: 'this_is_my_secret_key',
+  resave: false,
+  saveUninitialized: true,
+}));
+
+// Function to check if the user is authenticated (session variable set)
+function isAuthenticated(req, res, next) {
+  if (req.session.success) {
+    return next();
+  }
+  res.redirect("/");
+}
 
 // Define routes
 const routes = [
@@ -64,6 +81,17 @@ app.set("layout", "layout"); // Refers to views/layout.ejs
 // Routes
 app.get("/", (req, res) => {
   res.render("pages/index", { title: "Teens Meet" });
+});
+
+// Route to set session variable upon successful submission
+app.get("/setSuccessSession", (req, res) => {
+  req.session.success = true;
+  res.json({ success: true });
+});
+
+// Render the response page only if the user is authenticated
+app.get("/response", isAuthenticated, (req, res) => {
+  res.render("pages/response", { title: "Teens Meet" });
 });
 
 const delegates = require("./routes/delegates");

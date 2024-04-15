@@ -248,14 +248,32 @@
   });
 
   function showMessage(message, type) {
-    const messageOverlay = document.getElementById("messageOverlay");
-    const messageBox = document.getElementById("messageBox");
-    messageBox.textContent = message;
-    messageBox.className = `text-center p-4 mb-4 text-sm font-medium rounded ${type === "error" ? "text-error" : "text-success"}`;
-    messageOverlay.classList.remove("hidden");
+  const messageOverlay = document.getElementById("messageOverlay");
+  const messageBox = document.getElementById("messageBox");
+  messageBox.textContent = message;
+  messageBox.className = `text-center p-4 mb-4 text-sm font-medium rounded ${type === "error" ? "text-error" : "text-success"}`;
+  messageOverlay.classList.remove("hidden");
 
-    setTimeout(() => {
-      messageOverlay.classList.add("hidden");
-    }, 3000);
-  }
+  setTimeout(() => {
+    messageOverlay.classList.add("hidden");
+    if (type === "success") {
+      // Set session variable indicating success
+      fetch("/setSuccessSession")
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            window.location.href = "/response"; // Redirect only on success
+          } else {
+            window.location.href = "/";
+          }
+        })
+        .catch(error => {
+          console.error("Failed to set session:", error);
+          window.location.href = "/";
+        });
+    } else {
+      window.location.href = "/";
+    }
+  }, 1500);
+}
 </script>
