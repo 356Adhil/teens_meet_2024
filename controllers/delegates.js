@@ -77,6 +77,7 @@ async function sendWhatsAppMessaging(user) {
     console.log({ phoneNumber });
 
     const WhatsappMessage = `
+Hi ${user.full_name},
 🌟 Thank you for Registering Teens Meet 2024! 🌟
 
 Thank you for helping us test our registration for Teens Meet 2024. Your feedback is crucial to improving our platform.
