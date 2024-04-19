@@ -90,7 +90,7 @@ app.get("/setSuccessSession", (req, res) => {
 });
 
 // Render the response page only if the user is authenticated
-app.get("/response", (req, res) => {
+app.get("/response", isAuthenticated, (req, res) => {
   res.render("pages/response", { title: "Teens Meet" });
 });
 
