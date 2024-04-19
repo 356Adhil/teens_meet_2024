@@ -122,7 +122,7 @@ Innovation Edge`.replace(/\n\s*\n\s*/g, "\n\n");
     config = {
       method: "post",
       url: process.env.WHATSAPP_API_URL,
-      data: data,
+      data: delegate,
     };
 
     await axios
