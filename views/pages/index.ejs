@@ -261,19 +261,25 @@
       fetch("/setSuccessSession")
         .then(response => response.json())
         .then(data => {
+          console.log("Session variable set:", data);
           if (data.success) {
+            console.log("Redirecting to response page...");
             window.location.href = "/response"; // Redirect only on success
           } else {
+            console.log("Redirecting to home page...");
             window.location.href = "/";
           }
         })
         .catch(error => {
           console.error("Failed to set session:", error);
+          console.log("Redirecting to home page...");
           window.location.href = "/";
         });
     } else {
+      console.log("Redirecting to home page...");
       window.location.href = "/";
     }
   }, 1500);
 }
+
 </script>
