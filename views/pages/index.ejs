@@ -293,9 +293,10 @@
     })
       .then((response) => {
         if (!response.ok) {
-          throw new Error(
-            "Network response was not ok: " + response.statusText
-          );
+          // Parsing the response as JSON if there's an error
+          return response.json().then((errData) => {
+            throw new Error(errData.error || "Network response was not ok");
+          });
         }
         return response.json();
       })
@@ -313,7 +314,7 @@
         // Hide the loader if there is an error
         document.getElementById("page-loader").style.display = "none";
         console.error("Fetch error:", error);
-        showMessage("Failed to submit form: " + error.message, "error");
+        showMessage(error.message, "error");
       });
   });
 

@@ -6,13 +6,16 @@ const { SitemapStream, streamToPromise } = require("sitemap");
 const { createGzip } = require("zlib");
 const connectDB = require("./config/db");
 require("dotenv").config();
+const MongoStore = require("connect-mongo"); // Import connect-mongo
 
-
-// Configure express-session middleware
+// Configure express-session middleware with connect-mongo
 app.use(session({
   secret: 'this_is_my_secret_key',
   resave: false,
   saveUninitialized: true,
+  store: MongoStore.create({
+      mongoUrl: process.env.MONGO_URI
+  })
 }));
 
 // Function to check if the user is authenticated (session variable set)
