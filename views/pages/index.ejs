@@ -10,7 +10,12 @@
   #messageOverlay {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.4); /* Slightly darker backdrop for more focus */
+    background: rgba(
+      0,
+      0,
+      0,
+      0.4
+    ); /* Slightly darker backdrop for more focus */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -36,13 +41,30 @@
 
   /* Success and error message styling */
   .text-success {
-    border: 1px solid #4CAF50; /* Green border */
-    color: #4CAF50; /* Green text */
+    border: 1px solid #4caf50; /* Green border */
+    color: #4caf50; /* Green text */
   }
 
   .text-error {
     border: 1px solid #f44336; /* Red border */
     color: #f44336; /* Red text */
+  }
+  .loader {
+    border: 4px solid #f3f3f3; /* Light grey */
+    border-top: 4px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 2s linear infinite;
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
   }
 </style>
 
@@ -53,11 +75,16 @@
   >
     <div class="bg-white p-6 sm:p-8 rounded-lg shadow-lg w-full max-w-md">
       <h2 class="text-xl sm:text-2xl font-bold mb-6 text-gray-800 text-center">
-        Registration for Teens Meet <br> 2024
+        Registration for Teens Meet <br />
+        2024
       </h2>
 
       <div id="messageOverlay" class="hidden">
-        <div id="messageBox" class="text-center p-4 mb-4 text-sm font-medium rounded"></div>
+        <div id="loader" class="loader" style="display: none"></div>
+        <div
+          id="messageBox"
+          class="text-center p-4 mb-4 text-sm font-medium rounded"
+        ></div>
       </div>
 
       <form
@@ -227,12 +254,23 @@
     event.preventDefault();
     const formData = new FormData(this);
 
+    // Show loader
+    const messageOverlay = document.getElementById("messageOverlay");
+    const loader = document.getElementById("loader");
+    const messageBox = document.getElementById("messageBox");
+
+    messageOverlay.classList.remove("hidden");
+    loader.style.display = "block"; // Show the loader
+    messageBox.style.display = "none"; // Hide message box while loading
+
     fetch("/delegates", {
       method: "POST",
-      body: formData, // No headers are set; the browser handles it
+      body: formData,
     })
       .then((response) => response.json())
       .then((data) => {
+        loader.style.display = "none"; // Hide loader
+        messageBox.style.display = "block"; // Show message box to display the message
         if (data.error) {
           showMessage(data.error, "error");
         } else {
@@ -240,43 +278,44 @@
         }
       })
       .catch((error) => {
+        loader.style.display = "none"; // Ensure loader is hidden on error
+        messageBox.style.display = "block"; // Show message box to display the error
         showMessage("Failed to submit form: " + error.message, "error");
       });
   });
 
   function showMessage(message, type) {
-  const messageOverlay = document.getElementById("messageOverlay");
-  const messageBox = document.getElementById("messageBox");
-  messageBox.textContent = message;
-  messageBox.className = `text-center p-4 mb-4 text-sm font-medium rounded ${type === "error" ? "text-error" : "text-success"}`;
-  messageOverlay.classList.remove("hidden");
+    const messageBox = document.getElementById("messageBox");
+    messageBox.textContent = message;
+    messageBox.className = `text-center p-4 mb-4 text-sm font-medium rounded ${
+      type === "error" ? "text-error" : "text-success"
+    }`;
 
-  setTimeout(() => {
-    messageOverlay.classList.add("hidden");
-    if (type === "success") {
-      // Set session variable indicating success
-      fetch("/setSuccessSession")
-        .then(response => response.json())
-        .then(data => {
-          console.log("Session variable set:", data);
-          if (data.success) {
-            console.log("Redirecting to response page...");
-            window.location.href = "/response"; // Redirect only on success
-          } else {
+    setTimeout(() => {
+      document.getElementById("messageOverlay").classList.add("hidden");
+      if (type === "success") {
+        // Redirect logic remains the same
+        fetch("/setSuccessSession")
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("Session variable set:", data);
+            if (data.success) {
+              console.log("Redirecting to response page...");
+              window.location.href = "/response"; // Redirect only on success
+            } else {
+              console.log("Redirecting to home page...");
+              window.location.href = "/";
+            }
+          })
+          .catch((error) => {
+            console.error("Failed to set session:", error);
             console.log("Redirecting to home page...");
             window.location.href = "/";
-          }
-        })
-        .catch(error => {
-          console.error("Failed to set session:", error);
-          console.log("Redirecting to home page...");
-          window.location.href = "/";
-        });
-    } else {
-      console.log("Redirecting to home page...");
-      window.location.href = "/";
-    }
-  }, 1500);
-}
-
+          });
+      } else {
+        console.log("Redirecting to home page...");
+        window.location.href = "/";
+      }
+    }, 1500); // Timeout for message display
+  }
 </script>
