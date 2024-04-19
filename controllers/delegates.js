@@ -39,7 +39,9 @@ exports.createDelegate = async (req, res) => {
   try {
     const existingMobile = await Delegates.findOne({ mobile: req.body.mobile });
     if (existingMobile) {
-      return res.status(400).json({ error: "You Are Already Registered For Teen's Meet 2024 !" });
+      return res
+        .status(400)
+        .json({ error: "You Are Already Registered For Teen's Meet 2024 !" });
     }
 
     const existingEmail = await Delegates.findOne({ email: req.body.email });
@@ -81,14 +83,27 @@ async function sendWhatsAppMessaging(user) {
     console.log({ delegateNumaber });
 
     const WhatsappMessage = `
-🌟 Thank you for Registering Teens Meet 2024! 🌟
+പ്രിയപ്പെട്ട ${user.parent_name}
 
-Hi ${user.full_name},
+വളർച്ചാവികാസങ്ങളുടെ കരുത്തുറ്റ കൗമാരത്തിന് കാലകോലങ്ങളുടെ  ഇരുട്ടുകളിൽ ഇസ്‌ലാമിൻ്റെ വെളിച്ചം പകർന്നു നൽകുന്നതാണ് ഹയ്യാ ടീൻസ് മീറ്റ്. അറിഞ്ഞും അനുഭവിച്ചും ആസ്വദിച്ചും ആനന്ദിച്ചുമുള്ള മൂന്നു നാൾ അവൻ്റെ ഇസ്‌ലാമികമായ വളർച്ചയിൽ നിർണായക പങ്ക് വഹിക്കുമെന്ന് നമുക്ക് പ്രതീക്ഷിക്കാം...
 
-Thank you for helping us test our registration for Teens Meet 2024. Your feedback is crucial to improving our platform.
+രക്ഷിതാവ് എന്ന നിലയിൽ അതിലേക്ക് താങ്കളുടെ മകനെ രജിസ്റ്റർ ചെയ്തതിന് അഭിനന്ദനങ്ങൾ.
 
-Best Regards,
-Innovation Edge`.replace(/\n\s*\n\s*/g, "\n\n");
+സ്നേഹത്തോടെ,
+Students Islamic Organisation(Sio)
+Chungathara area`.replace(/\n\s*\n\s*/g, "\n\n");
+
+    const delegateMessage = `
+പ്രിയപ്പെട്ട ${user.full_name}
+
+ഹയ്യാ ടീൻസ് മീറ്റിൽ രജിസ്റ്റർ ചെയ്തതിന് അഭിനന്ദനങ്ങൾ
+
+കനവുകളുടെ കൗമാരത്തെ ഇസ്‌ലാമിനാൽ കരുത്തുറ്റതാക്കുന്നതാണ് ഹയ്യാ ടീൻസ് മീറ്റ്.
+സൗഹൃദത്തിൻ്റെ ഹൃദ്യതയിൽ കളിച്ചും ചിരിച്ചും മണ്ണും മനസ്സുമറിഞ്ഞ് ഒന്നിക്കാം നമുക്ക് മൂലേപ്പാടത്ത്.
+
+സ്നേഹത്തോടെ,
+Students Islamic Organisation(Sio)
+Chungathara area`.replace(/\n\s*\n\s*/g, "\n\n");
 
     const data = new FormData();
     data.append("type", "text");
@@ -110,6 +125,7 @@ Innovation Edge`.replace(/\n\s*\n\s*/g, "\n\n");
         .request(config)
         .then((response) => {
           console.log(JSON.stringify(response.data));
+          console.log("message sent to", phoneNumber);
         })
         .catch((error) => {
           console.log(error);
@@ -118,12 +134,12 @@ Innovation Edge`.replace(/\n\s*\n\s*/g, "\n\n");
       // If they are different, send messages to both numbers
       const delegate = new FormData();
       delegate.append("type", "text");
-      delegate.append("message", WhatsappMessage);
+      delegate.append("message", delegateMessage);
       delegate.append("recipient", delegateNumaber);
       delegate.append("account", process.env.WHATSAPP_ACCOUNT);
       delegate.append("secret", process.env.WHTSP_ACCESS_TOKEN);
 
-      const config = {
+      let config = {
         method: "post",
         url: process.env.WHATSAPP_API_URL,
         data: delegate,
@@ -133,6 +149,30 @@ Innovation Edge`.replace(/\n\s*\n\s*/g, "\n\n");
         .request(config)
         .then((response) => {
           console.log(JSON.stringify(response.data));
+          console.log("message sent to", delegateNumaber);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+      const parent = new FormData();
+      parent.append("type", "text");
+      parent.append("message", WhatsappMessage);
+      parent.append("recipient", phoneNumber);
+      parent.append("account", process.env.WHATSAPP_ACCOUNT);
+      parent.append("secret", process.env.WHTSP_ACCESS_TOKEN);
+
+      config = {
+        method: "post",
+        url: process.env.WHATSAPP_API_URL,
+        data: parent,
+      };
+
+      await axios
+        .request(config)
+        .then((response) => {
+          console.log(JSON.stringify(response.data));
+          console.log("message sent to", phoneNumber);
         })
         .catch((error) => {
           console.log(error);
@@ -142,4 +182,3 @@ Innovation Edge`.replace(/\n\s*\n\s*/g, "\n\n");
     console.error("Failed to send WhatsApp message:", error);
   }
 }
-
