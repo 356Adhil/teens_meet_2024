@@ -44,9 +44,35 @@
     border: 1px solid #f44336; /* Red border */
     color: #f44336; /* Red text */
   }
+  #page-loader {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(255, 255, 255, 0.8); /* White background with slight transparency */
+  display: none; /* Hidden by default */
+  align-items: center;
+  justify-content: center;
+  z-index: 1050; /* Make sure it's above other content */
+}
+
+.loader {
+  border: 4px solid #f3f3f3; /* Light grey border */
+  border-top: 4px solid #3498db; /* Blue border top */
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 </style>
 
 <section class="px-5 pt-10 background-image">
+  <div id="page-loader" class="fixed inset-0 bg-white flex justify-center items-center z-50" style="display: none;">
+    <div class="loader"></div>
+  </div>
   <div
     class="items-start mt-10 justify-center flex"
     style="min-height: calc(100vh - 4rem)"
@@ -223,26 +249,40 @@
 </section>
 
 <script>
-  document.querySelector("form").addEventListener("submit", function (event) {
-    event.preventDefault();
-    const formData = new FormData(this);
+document.querySelector("form").addEventListener("submit", function (event) {
+  event.preventDefault();
+  const formData = new FormData(this);
 
-    fetch("/delegates", {
-      method: "POST",
-      body: formData, // No headers are set; the browser handles it
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.error) {
-          showMessage(data.error, "error");
-        } else {
-          showMessage(data.message, "success");
-        }
-      })
-      .catch((error) => {
-        showMessage("Failed to submit form: " + error.message, "error");
-      });
+  // Display the loader
+  document.getElementById("page-loader").style.display = "flex";
+
+  fetch("/delegates", {
+    method: "POST",
+    body: formData,
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok: ' + response.statusText);
+    }
+    return response.json();
+  })
+  .then(data => {
+    // Hide the loader before showing message
+    document.getElementById("page-loader").style.display = "none";
+
+    if (data.error) {
+      showMessage(data.error, "error");
+    } else {
+      showMessage(data.message, "success");
+    }
+  })
+  .catch(error => {
+    // Hide the loader if there is an error
+    document.getElementById("page-loader").style.display = "none";
+    console.error('Fetch error:', error);
+    showMessage("Failed to submit form: " + error.message, "error");
   });
+});
 
   function showMessage(message, type) {
   const messageOverlay = document.getElementById("messageOverlay");
