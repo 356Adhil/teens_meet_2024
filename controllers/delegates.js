@@ -93,47 +93,53 @@ Innovation Edge`.replace(/\n\s*\n\s*/g, "\n\n");
     const data = new FormData();
     data.append("type", "text");
     data.append("message", WhatsappMessage);
-    data.append("recipient", phoneNumber);
     data.append("account", process.env.WHATSAPP_ACCOUNT);
     data.append("secret", process.env.WHTSP_ACCESS_TOKEN);
 
-    let config = {
-      method: "post",
-      url: process.env.WHATSAPP_API_URL,
-      data: data,
-    };
+    // Check if phoneNumber and delegateNumaber are the same
+    if (phoneNumber === delegateNumaber) {
+      data.append("recipient", phoneNumber);
 
-    await axios
-      .request(config)
-      .then((response) => {
-        console.log(JSON.stringify(response.data));
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+      const config = {
+        method: "post",
+        url: process.env.WHATSAPP_API_URL,
+        data: data,
+      };
 
-    const delegate = new FormData();
-    delegate.append("type", "text");
-    delegate.append("message", WhatsappMessage);
-    delegate.append("recipient", delegateNumaber);
-    delegate.append("account", process.env.WHATSAPP_ACCOUNT);
-    delegate.append("secret", process.env.WHTSP_ACCESS_TOKEN);
+      await axios
+        .request(config)
+        .then((response) => {
+          console.log(JSON.stringify(response.data));
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      // If they are different, send messages to both numbers
+      const delegate = new FormData();
+      delegate.append("type", "text");
+      delegate.append("message", WhatsappMessage);
+      delegate.append("recipient", delegateNumaber);
+      delegate.append("account", process.env.WHATSAPP_ACCOUNT);
+      delegate.append("secret", process.env.WHTSP_ACCESS_TOKEN);
 
-    config = {
-      method: "post",
-      url: process.env.WHATSAPP_API_URL,
-      data: delegate,
-    };
+      const config = {
+        method: "post",
+        url: process.env.WHATSAPP_API_URL,
+        data: delegate,
+      };
 
-    await axios
-      .request(config)
-      .then((response) => {
-        console.log(JSON.stringify(response.data));
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+      await axios
+        .request(config)
+        .then((response) => {
+          console.log(JSON.stringify(response.data));
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   } catch (error) {
     console.error("Failed to send WhatsApp message:", error);
   }
 }
+
