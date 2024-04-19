@@ -105,80 +105,67 @@ Chungathara area`.replace(/\n\s*\n\s*/g, "\n\n");
 Students Islamic Organisation(Sio)
 Chungathara area`.replace(/\n\s*\n\s*/g, "\n\n");
 
-    const data = new FormData();
-    data.append("type", "text");
-    data.append("message", WhatsappMessage);
-    data.append("account", process.env.WHATSAPP_ACCOUNT);
-    data.append("secret", process.env.WHTSP_ACCESS_TOKEN);
+const data = new FormData();
+data.append("type", "text");
+data.append("message", WhatsappMessage);
+data.append("account", process.env.WHATSAPP_ACCOUNT);
+data.append("secret", process.env.WHTSP_ACCESS_TOKEN);
 
-    // Check if phoneNumber and delegateNumaber are the same
-    if (phoneNumber === delegateNumaber) {
-      data.append("recipient", phoneNumber);
+if (phoneNumber && delegateNumaber) {
+  // Check if phoneNumber and delegateNumaber are the same
+  if (phoneNumber === delegateNumaber) {
+    data.append("recipient", phoneNumber);
+  } else {
+    const delegate = new FormData();
+    delegate.append("type", "text");
+    delegate.append("message", delegateMessage);
+    delegate.append("recipient", delegateNumaber);
+    delegate.append("account", process.env.WHATSAPP_ACCOUNT);
+    delegate.append("secret", process.env.WHTSP_ACCESS_TOKEN);
 
-      const config = {
-        method: "post",
-        url: process.env.WHATSAPP_API_URL,
-        data: data,
-      };
+    let config = {
+      method: "post",
+      url: process.env.WHATSAPP_API_URL,
+      data: delegate,
+    };
 
-      await axios
-        .request(config)
-        .then((response) => {
-          console.log(JSON.stringify(response.data));
-          console.log("message sent to", phoneNumber);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    } else {
-      // If they are different, send messages to both numbers
-      const delegate = new FormData();
-      delegate.append("type", "text");
-      delegate.append("message", delegateMessage);
-      delegate.append("recipient", delegateNumaber);
-      delegate.append("account", process.env.WHATSAPP_ACCOUNT);
-      delegate.append("secret", process.env.WHTSP_ACCESS_TOKEN);
+    await axios
+      .request(config)
+      .then((response) => {
+        console.log(JSON.stringify(response.data));
+        console.log("message sent to", delegateNumaber);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
 
-      let config = {
-        method: "post",
-        url: process.env.WHATSAPP_API_URL,
-        data: delegate,
-      };
-
-      await axios
-        .request(config)
-        .then((response) => {
-          console.log(JSON.stringify(response.data));
-          console.log("message sent to", delegateNumaber);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-
-      const parent = new FormData();
-      parent.append("type", "text");
-      parent.append("message", WhatsappMessage);
-      parent.append("recipient", phoneNumber);
-      parent.append("account", process.env.WHATSAPP_ACCOUNT);
-      parent.append("secret", process.env.WHTSP_ACCESS_TOKEN);
-
-      config = {
-        method: "post",
-        url: process.env.WHATSAPP_API_URL,
-        data: parent,
-      };
-
-      await axios
-        .request(config)
-        .then((response) => {
-          console.log(JSON.stringify(response.data));
-          console.log("message sent to", phoneNumber);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-  } catch (error) {
-    console.error("Failed to send WhatsApp message:", error);
+    data.append("recipient", phoneNumber);
   }
+} else if (phoneNumber) {
+  data.append("recipient", phoneNumber);
+} else if (delegateNumaber) {
+  data.append("recipient", delegateNumaber);
+} else {
+  console.log("Phone number not available");
+  return;
+}
+
+const config = {
+  method: "post",
+  url: process.env.WHATSAPP_API_URL,
+  data: data,
+};
+
+await axios
+  .request(config)
+  .then((response) => {
+    console.log(JSON.stringify(response.data));
+    console.log("message sent");
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+} catch (error) {
+console.error("Failed to send WhatsApp message:", error);
+}
 }

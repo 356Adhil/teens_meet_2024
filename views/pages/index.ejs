@@ -10,7 +10,12 @@
   #messageOverlay {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.4); /* Slightly darker backdrop for more focus */
+    background: rgba(
+      0,
+      0,
+      0,
+      0.4
+    ); /* Slightly darker backdrop for more focus */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -36,8 +41,8 @@
 
   /* Success and error message styling */
   .text-success {
-    border: 1px solid #4CAF50; /* Green border */
-    color: #4CAF50; /* Green text */
+    border: 1px solid #4caf50; /* Green border */
+    color: #4caf50; /* Green text */
   }
 
   .text-error {
@@ -45,32 +50,45 @@
     color: #f44336; /* Red text */
   }
   #page-loader {
-  position: fixed;
-  inset: 0;
-  background-color: rgba(255, 255, 255, 0.8); /* White background with slight transparency */
-  display: none; /* Hidden by default */
-  align-items: center;
-  justify-content: center;
-  z-index: 1050; /* Make sure it's above other content */
-}
+    position: fixed;
+    inset: 0;
+    background-color: rgba(
+      255,
+      255,
+      255,
+      0.8
+    ); /* White background with slight transparency */
+    display: none; /* Hidden by default */
+    align-items: center;
+    justify-content: center;
+    z-index: 1050; /* Make sure it's above other content */
+  }
 
-.loader {
-  border: 4px solid #f3f3f3; /* Light grey border */
-  border-top: 4px solid #3498db; /* Blue border top */
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  animation: spin 1s linear infinite;
-}
+  .loader {
+    border: 4px solid #f3f3f3; /* Light grey border */
+    border-top: 4px solid #3498db; /* Blue border top */
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+  }
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
 </style>
 
 <section class="px-5 pt-10 background-image">
-  <div id="page-loader" class="fixed inset-0 bg-white flex justify-center items-center z-50" style="display: none;">
+  <div
+    id="page-loader"
+    class="fixed inset-0 bg-white flex justify-center items-center z-50"
+    style="display: none"
+  >
     <div class="loader"></div>
   </div>
   <div
@@ -79,11 +97,15 @@
   >
     <div class="bg-white p-6 sm:p-8 rounded-lg shadow-lg w-full max-w-md">
       <h2 class="text-xl sm:text-2xl font-bold mb-6 text-gray-800 text-center">
-        Registration for Teens Meet <br> 2024
+        Registration for Teens Meet <br />
+        2024
       </h2>
 
       <div id="messageOverlay" class="hidden">
-        <div id="messageBox" class="text-center p-4 mb-4 text-sm font-medium rounded"></div>
+        <div
+          id="messageBox"
+          class="text-center p-4 mb-4 text-sm font-medium rounded"
+        ></div>
       </div>
 
       <form
@@ -106,7 +128,7 @@
             <label
               for="floating_full_name"
               class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-              >Full Name</label
+              >Full Name<span class="text-red-500">*</span></label
             >
           </div>
 
@@ -141,7 +163,7 @@
             <label
               for="floating_parent_name"
               class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-              >Parent's Name</label
+              >Parent's Name<span class="text-red-500">*</span></label
             >
           </div>
 
@@ -158,26 +180,11 @@
             <label
               for="floating_parent_mobile"
               class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-              >Parent's Mobile</label
+              >Parent's Mobile<span class="text-red-500">*</span></label
             >
           </div>
         </div>
 
-        <!-- Email -->
-        <div class="relative z-0 w-full mb-5 group">
-          <input
-            type="email"
-            name="email"
-            id="floating_email"
-            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-            placeholder=" "
-          />
-          <label
-            for="floating_email"
-            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-            >Email</label
-          >
-        </div>
         <!-- Class & Age -->
 
         <div class="grid md:grid-cols-2 md:gap-6">
@@ -193,7 +200,7 @@
             <label
               for="floating_class"
               class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-              >Class</label
+              >Class<span class="text-red-500">*</span></label
             >
           </div>
           <div class="relative z-0 w-full mb-5 group">
@@ -225,7 +232,23 @@
           <label
             for="floating_place"
             class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-            >Place</label
+            >Place<span class="text-red-500">*</span></label
+          >
+        </div>
+
+        <!-- Email -->
+        <div class="relative z-0 w-full mb-5 group">
+          <input
+            type="email"
+            name="email"
+            id="floating_email"
+            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+            placeholder=" "
+          />
+          <label
+            for="floating_email"
+            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            >Email</label
           >
         </div>
 
@@ -249,74 +272,77 @@
 </section>
 
 <script>
-document.querySelector("form").addEventListener("submit", function (event) {
-  event.preventDefault();
-  const formData = new FormData(this);
+  document.querySelector("form").addEventListener("submit", function (event) {
+    event.preventDefault();
+    const formData = new FormData(this);
 
-  // Display the loader
-  document.getElementById("page-loader").style.display = "flex";
+    // Display the loader
+    document.getElementById("page-loader").style.display = "flex";
 
-  fetch("/delegates", {
-    method: "POST",
-    body: formData,
-  })
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Network response was not ok: ' + response.statusText);
-    }
-    return response.json();
-  })
-  .then(data => {
-    // Hide the loader before showing message
-    document.getElementById("page-loader").style.display = "none";
+    fetch("/delegates", {
+      method: "POST",
+      body: formData,
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(
+            "Network response was not ok: " + response.statusText
+          );
+        }
+        return response.json();
+      })
+      .then((data) => {
+        // Hide the loader before showing message
+        document.getElementById("page-loader").style.display = "none";
 
-    if (data.error) {
-      showMessage(data.error, "error");
-    } else {
-      showMessage(data.message, "success");
-    }
-  })
-  .catch(error => {
-    // Hide the loader if there is an error
-    document.getElementById("page-loader").style.display = "none";
-    console.error('Fetch error:', error);
-    showMessage("Failed to submit form: " + error.message, "error");
+        if (data.error) {
+          showMessage(data.error, "error");
+        } else {
+          showMessage(data.message, "success");
+        }
+      })
+      .catch((error) => {
+        // Hide the loader if there is an error
+        document.getElementById("page-loader").style.display = "none";
+        console.error("Fetch error:", error);
+        showMessage("Failed to submit form: " + error.message, "error");
+      });
   });
-});
 
   function showMessage(message, type) {
-  const messageOverlay = document.getElementById("messageOverlay");
-  const messageBox = document.getElementById("messageBox");
-  messageBox.textContent = message;
-  messageBox.className = `text-center p-4 mb-4 text-sm font-medium rounded ${type === "error" ? "text-error" : "text-success"}`;
-  messageOverlay.classList.remove("hidden");
+    const messageOverlay = document.getElementById("messageOverlay");
+    const messageBox = document.getElementById("messageBox");
+    messageBox.textContent = message;
+    messageBox.className = `text-center p-4 mb-4 text-sm font-medium rounded ${
+      type === "error" ? "text-error" : "text-success"
+    }`;
+    messageOverlay.classList.remove("hidden");
 
-  setTimeout(() => {
-    messageOverlay.classList.add("hidden");
-    if (type === "success") {
-      // Set session variable indicating success
-      fetch("/setSuccessSession")
-        .then(response => response.json())
-        .then(data => {
-          console.log("Session variable set:", data);
-          if (data.success) {
-            console.log("Redirecting to response page...");
-            window.location.href = "/response"; // Redirect only on success
-          } else {
+    setTimeout(() => {
+      messageOverlay.classList.add("hidden");
+      if (type === "success") {
+        // Set session variable indicating success
+        fetch("/setSuccessSession")
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("Session variable set:", data);
+            if (data.success) {
+              console.log("Redirecting to response page...");
+              window.location.href = "/response"; // Redirect only on success
+            } else {
+              console.log("Redirecting to home page...");
+              window.location.href = "/";
+            }
+          })
+          .catch((error) => {
+            console.error("Failed to set session:", error);
             console.log("Redirecting to home page...");
             window.location.href = "/";
-          }
-        })
-        .catch(error => {
-          console.error("Failed to set session:", error);
-          console.log("Redirecting to home page...");
-          window.location.href = "/";
-        });
-    } else {
-      console.log("Redirecting to home page...");
-      window.location.href = "/";
-    }
-  }, 1500);
-}
-
+          });
+      } else {
+        console.log("Redirecting to home page...");
+        window.location.href = "/";
+      }
+    }, 1500);
+  }
 </script>
