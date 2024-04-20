@@ -7,16 +7,38 @@ const { createGzip } = require("zlib");
 const connectDB = require("./config/db");
 require("dotenv").config();
 const MongoStore = require("connect-mongo"); // Import connect-mongo
+const cors = require("cors");
+
+// Enable CORS for multiple origins
+const allowedOrigins = [
+  "http://localhost:3000",
+  "http://localhost:3001",
+  "https://teensmeet-83ba9bcf1c20.herokuapp.com",
+];
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      // Check if the origin is in the allowedOrigins array
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+  })
+);
 
 // Configure express-session middleware with connect-mongo
-app.use(session({
-  secret: 'this_is_my_secret_key',
-  resave: false,
-  saveUninitialized: true,
-  store: MongoStore.create({
-      mongoUrl: process.env.MONGO_URI
+app.use(
+  session({
+    secret: "this_is_my_secret_key",
+    resave: false,
+    saveUninitialized: true,
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGO_URI,
+    }),
   })
-}));
+);
 
 // Function to check if the user is authenticated (session variable set)
 function isAuthenticated(req, res, next) {
