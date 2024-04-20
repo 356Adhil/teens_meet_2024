@@ -100,6 +100,8 @@ app.get("/response", isAuthenticated, (req, res) => {
 const delegates = require("./routes/delegates");
 
 app.use("/delegates", delegates);
+const authRoutes = require("./routes/auth");
+app.use("/auth", authRoutes);
 
 // Start the server
 const PORT = process.env.PORT || 3003;
