@@ -16,6 +16,7 @@ const allowedOrigins = [
   "https://teensmeet-83ba9bcf1c20.herokuapp.com",
   "https://66244ad98611d80008994120--teensmeet-admin.netlify.app",
   "https://teensmeet-admin.netlify.app",
+  "https://teens-meet-2024-cms.vercel.app",
 ];
 app.use(
   cors({
