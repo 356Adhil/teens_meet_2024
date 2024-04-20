@@ -8,6 +8,7 @@ const FormData = require("form-data");
 exports.getDelegates = async (req, res) => {
   try {
     const delegates = await Delegates.find();
+    console.log({delegates});
 
     res.status(200).json(delegates);
   } catch (error) {
@@ -18,19 +19,19 @@ exports.getDelegates = async (req, res) => {
 // @desc    Get a delegate
 // @route   GET /delegates/:id
 // @access  Public
-exports.getDelegate = async (req, res) => {
-  try {
-    const delegate = await Delegates.findById(req.params.id);
+// exports.getDelegate = async (req, res) => {
+//   try {
+//     const delegate = await Delegates.findById(req.params.id);
 
-    if (!delegate) {
-      return res.status(404).json({ message: "Delegate not found" });
-    }
+//     if (!delegate) {
+//       return res.status(404).json({ message: "Delegate not found" });
+//     }
 
-    res.status(200).json(delegate);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
+//     res.status(200).json(delegate);
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// };
 
 // @desc    Create a delegate
 // @route   POST /delegates
