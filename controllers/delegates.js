@@ -8,7 +8,6 @@ const FormData = require("form-data");
 exports.getDelegates = async (req, res) => {
   try {
     const delegates = await Delegates.find();
-    console.log({delegates});
 
     res.status(200).json(delegates);
   } catch (error) {
@@ -19,19 +18,59 @@ exports.getDelegates = async (req, res) => {
 // @desc    Get a delegate
 // @route   GET /delegates/:id
 // @access  Public
-// exports.getDelegate = async (req, res) => {
-//   try {
-//     const delegate = await Delegates.findById(req.params.id);
+exports.getDelegate = async (req, res) => {
+  try {
+    const delegate = await Delegates.findById(req.params.id);
 
-//     if (!delegate) {
-//       return res.status(404).json({ message: "Delegate not found" });
-//     }
+    if (!delegate) {
+      return res.status(404).json({ message: "Delegate not found" });
+    }
 
-//     res.status(200).json(delegate);
-//   } catch (error) {
-//     res.status(500).json({ error: error.message });
-//   }
-// };
+    res.status(200).json(delegate);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// @desc    Update a delegate by ID
+// @route   PUT /delegates/:id
+// @access  Public
+exports.updateDelegate = async (req, res) => {
+  const { id } = req.params;
+  const updateData = req.body;
+  try {
+    const delegate = await Delegates.findByIdAndUpdate(id, updateData, {
+      new: true,
+    });
+
+    if (!delegate) {
+      return res.status(404).json({ error: "Delegate not found" });
+    }
+
+    res.status(200).json(delegate);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// @desc    Delete a delegate by ID
+// @route   DELETE /delegates/:id
+// @access  Public
+exports.deleteDelegate = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const deletedDelegate = await Delegates.findByIdAndDelete(id);
+
+    if (!deletedDelegate) {
+      return res.status(404).json({ error: "Delegate not found" });
+    }
+
+    res.status(200).json({ message: "Delegate deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
 
 // @desc    Create a delegate
 // @route   POST /delegates
