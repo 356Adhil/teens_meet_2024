@@ -4,9 +4,9 @@ const app = express();
 const expressLayouts = require("express-ejs-layouts");
 const { SitemapStream, streamToPromise } = require("sitemap");
 const { createGzip } = require("zlib");
-const connectDB = require("./config/db");
+// const connectDB = require("./config/db");
 require("dotenv").config();
-const MongoStore = require("connect-mongo"); // Import connect-mongo
+// const MongoStore = require("connect-mongo"); // Import connect-mongo
 const cors = require("cors");
 
 // Enable CORS for multiple origins
@@ -31,17 +31,17 @@ app.use(
   })
 );
 
-// Configure express-session middleware with connect-mongo
-app.use(
-  session({
-    secret: "this_is_my_secret_key",
-    resave: false,
-    saveUninitialized: true,
-    store: MongoStore.create({
-      mongoUrl: process.env.MONGO_URI,
-    }),
-  })
-);
+// // Configure express-session middleware with connect-mongo
+// app.use(
+//   session({
+//     secret: "this_is_my_secret_key",
+//     resave: false,
+//     saveUninitialized: true,
+//     store: MongoStore.create({
+//       mongoUrl: process.env.MONGO_URI,
+//     }),
+//   })
+// );
 
 // Function to check if the user is authenticated (session variable set)
 function isAuthenticated(req, res, next) {
@@ -88,7 +88,7 @@ app.get("/sitemap.xml", async (req, res) => {
   }
 });
 
-connectDB();
+// connectDB();
 
 // Parse URL-encoded bodies (as sent by HTML forms)
 app.use(express.urlencoded({ extended: true }));
