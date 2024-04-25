@@ -23,13 +23,16 @@
     "express-ejs-layouts": "^2.5.1",
     "express-session": "^1.18.0",
     "form-data": "^4.0.0",
+    "install": "^0.13.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.3.1",
     "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.13",
     "nodemon": "^3.1.0",
+    "npm": "^10.5.2",
     "postcss-cli": "^11.0.0",
     "sitemap": "^7.1.1",
+    "strong-soap": "^4.0.5",
     "tailwindcss": "^3.4.3"
   }
 }
